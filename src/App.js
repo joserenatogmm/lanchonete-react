@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { UsuarioContextProvider } from "./shared/contexts/UsuarioContext"
+import { CarrinhoContextProvider } from "./shared/contexts/CarrinhoContext"
+import Home from "./pages/Home"
+import Cardapio from "./pages/Cardapio"
+import Carrinho from "./pages/Carrinho"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+    return (
+        <BrowserRouter>
+            <UsuarioContextProvider>
+                <CarrinhoContextProvider>
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/cardapio" element={<Cardapio />} />
+                        <Route path="/carrinho" element={<Carrinho />} />
+                    </Routes>
+                </CarrinhoContextProvider>
+            </UsuarioContextProvider>
+        </BrowserRouter>
+    )
 }
 
-export default App;
+export default App
+
