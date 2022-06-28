@@ -5,6 +5,8 @@ import NavBar from "../components/NavBar"
 import logo from '../images/ham-ico.png'
 import ProductLine from '../components/ProductLine'
 import styleProperties from '../shared/styleProperties.json'
+import { useContext } from 'react'
+import {UsuarioContext} from "../shared/contexts/UsuarioContext";
 
 //import items from '../shared/mock/shoppingcart.json'
 
@@ -36,13 +38,27 @@ const Sumary = styled.div`
     }
 `
 
+const ButtonFinish = styled.button`
+  margin-top: 5px;
+  background-color: green;
+  color: whitesmoke;
+  font-weight: bolder;
+  border-radius: 20px;
+  padding: 10px;
+  font-size: 25px;
+  cursor: pointer;
+`
+
 const Carrinho = () => {
-    const {carrinho} = useCarrinhoContext()
+    const {carrinho, checkout} = useCarrinhoContext()
+    const {saldo, setSaldo} = useContext(UsuarioContext)
+
 
     let sum = 0
     carrinho.forEach(product => {
         sum += product.price * product.qtd
     })
+
     return (
         <>
         <NavBar title="Larika" logo={logo}>
@@ -60,6 +76,18 @@ const Carrinho = () => {
                 Total
                 <span>R$ {Number.parseFloat(sum).toFixed(2)}</span>
             </Sumary>
+            <ButtonFinish onClick={() => {
+                if (sum === 0) {
+                    alert("Adicione itens no carrinho antes de realizar a compra.")
+                    return
+                }
+
+                if(checkout(saldo, sum, setSaldo)) {
+                    alert("Compra concluída.")
+                } else {
+                    alert("Não foi possível finalizar a compra, saldo insuficiente.")
+                }
+            }}>Finalizar Compra</ButtonFinish>
         </MainContainer>
         </>
     )

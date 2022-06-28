@@ -5,6 +5,7 @@ import styled from "styled-components"
 import { Link } from 'react-router-dom'
 import styleProperties from '../shared/styleProperties.json'
 import imgCart from '../images/carrinho.png'
+import {useCarrinhoContext} from "../shared/contexts/CarrinhoContext";
 
 const Nav = styled.nav`
     display: flex;
@@ -68,6 +69,12 @@ const UserProfile = styled.div`
 
 const NavBar = ( { logo, children, title }) => {
     const {nome, saldo} = useContext(UsuarioContext)
+    const {carrinho} = useCarrinhoContext()
+
+    let sumItems = 0
+    carrinho.forEach(product => {
+        sumItems += product.qtd
+    })
 
     return (
         <Nav>
@@ -82,7 +89,7 @@ const NavBar = ( { logo, children, title }) => {
                 <Link to="/carrinho">
                     <img src={imgCart} alt="Carrinho" />
                 </Link>
-                <span>0</span>
+                <span>{sumItems}</span>
             </ShoppingCart>
             <UserProfile>
                 <span>{nome}</span>

@@ -8,15 +8,15 @@ import Carrinho from "./pages/Carrinho"
 const App = () => {
     return (
         <BrowserRouter>
-            <UsuarioContextProvider>
-                <CarrinhoContextProvider>
+            <CarrinhoContextProvider>
+                <UsuarioContextProvider>
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/cardapio" element={<Cardapio />} />
                         <Route path="/carrinho" element={<Carrinho />} />
                     </Routes>
-                </CarrinhoContextProvider>
-            </UsuarioContextProvider>
+                </UsuarioContextProvider>
+            </CarrinhoContextProvider>
         </BrowserRouter>
     )
 }

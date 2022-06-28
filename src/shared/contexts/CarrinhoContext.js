@@ -45,7 +45,25 @@ const useCarrinhoContext = () => {
         }
     }
 
-    return { carrinho, setCarrinho, addItem, removeItem }
+    function clearCarrinho() {
+        setCarrinho([])
+    }
+
+    function checkout(saldo, total, setSaldo) {
+        saldo = Number.parseFloat(saldo)
+        total = Number.parseFloat(total)
+
+        if(saldo >= total) {
+            saldo -= total
+            setSaldo(saldo)
+            clearCarrinho()
+            return true
+        } else {
+            return false
+        }
+    }
+
+    return { carrinho, setCarrinho, addItem, removeItem, checkout}
 }
 
 export { CarrinhoContext, CarrinhoContextProvider, useCarrinhoContext }
